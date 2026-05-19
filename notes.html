@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Notes — Logan Calloway</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f7f6f3;
+      --ink: #111110;
+      --muted: #888580;
+      --accent: #2563eb;
+      --border: #e2e0da;
+      --mono: 'DM Mono', monospace;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding: 80px 28px;
+    }
+
+    .container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .page-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 300;
+      letter-spacing: -0.025em;
+      margin-bottom: 12px;
+    }
+
+    .page-intro {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 64px;
+      max-width: 480px;
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 48px;
+    }
+
+    .note-list {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .note-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: inherit;
+      transition: opacity 0.2s;
+    }
+
+    .note-item:first-child {
+      border-top: 1px solid var(--border);
+    }
+
+    .note-item:hover { opacity: 0.55; }
+
+    .note-course {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+
+    .note-name {
+      font-size: 0.98rem;
+      font-weight: 400;
+    }
+
+    .note-type {
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      color: var(--muted);
+      background: var(--border);
+      padding: 3px 10px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    .note-arrow {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-left: 8px;
+      transition: transform 0.2s;
+    }
+
+    .note-item:hover .note-arrow { transform: translate(3px, -3px); }
+
+    .note-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-copy {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    @media (max-width: 560px) {
+      .note-item { grid-template-columns: 1fr; }
+      .note-meta { margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+
+    <p class="page-eyebrow">Logan Calloway · Notes</p>
+    <h1>Course Notes</h1>
+    <p class="page-intro">Crib sheets and notes from my courses. Shared with students I trust — please keep it that way.</p>
+
+    <div class="divider"></div>
+
+    <div class="note-list">
+
+      <a class="note-item" href="Circuits_Crib_Sheet.pdf" target="_blank" rel="noopener">
+        <div>
+          <p class="note-course">ECE 200</p>
+          <p class="note-name">Circuits</p>
+        </div>
+        <div class="note-meta">
+          <span class="note-type">crib sheet</span>
+          <span class="note-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="note-item" href="MAE_208_Crib_Sheet.pdf" target="_blank" rel="noopener">
+        <div>
+          <p class="note-course">MAE 208</p>
+          <p class="note-name">Dynamics</p>
+        </div>
+        <div class="note-meta">
+          <span class="note-type">crib sheet</span>
+          <span class="note-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="note-item" href="ECE_220_Crib_Sheet.pdf" target="_blank" rel="noopener">
+        <div>
+          <p class="note-course">ECE 220</p>
+          <p class="note-name">Analytical Foundations of Electrical and Computer Engineering</p>
+        </div>
+        <div class="note-meta">
+          <span class="note-type">crib sheet</span>
+          <span class="note-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="note-item" href="JEM_420_Notes.pdf" target="_blank" rel="noopener">
+        <div>
+          <p class="note-course">JEM 420</p>
+          <p class="note-name">Mechatronics Systems Modeling</p>
+        </div>
+        <div class="note-meta">
+          <span class="note-type">notes</span>
+          <span class="note-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="note-item" href="MAE_315_Crib_Sheet.pdf" target="_blank" rel="noopener">
+        <div>
+          <p class="note-course">MAE 315</p>
+          <p class="note-name">Vibrations</p>
+        </div>
+        <div class="note-meta">
+          <span class="note-type">crib sheet</span>
+          <span class="note-arrow">↗</span>
+        </div>
+      </a>
+
+      <a class="note-item" href="MAE_214_Crib_sheet.pdf" target="_blank" rel="noopener">
+        <div>
+          <p class="note-course">MAE 214</p>
+          <p class="note-name">Solids</p>
+        </div>
+        <div class="note-meta">
+          <span class="note-type">crib sheet</span>
+          <span class="note-arrow">↗</span>
+        </div>
+      </a>
+
+    </div>
+
+    <footer>
+      <span class="footer-copy">© 2026 Logan Calloway</span>
+    </footer>
+
+  </div>
+
+</body>
+</html>
