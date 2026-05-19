@@ -572,29 +572,76 @@
   </footer>
 
   <script>
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 60);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
+const eyebrow = document.getElementById('eyebrow');
+const prefix = 'Logan Calloway · ';
+const words = [
+  { text: 'Electrical Engineer', color: '#2563eb' },
+  { text: 'Mechanical Engineer', color: '#BA7517' },
+  { text: 'Embedded Systems Engineer', color: '#3B6D11' },
+  { text: 'Computer Engineer', color: '#7C3AED' },
+  { text: 'Mechatronics Engineer', color: '#111110' },
+];
+let wordIndex = 0;
+let charIndex = 0;
+let deleting = false;
+let settled = false;
 
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => link.classList.remove('active'));
-        const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
+function type() {
+  if (settled) return;
+
+  const current = words[wordIndex];
+  const fullText = prefix + current.text;
+  const prefixLength = prefix.length;
+
+  if (!deleting) {
+    eyebrow.innerHTML = prefix + `<span style="color:${current.color}">${current.text.substring(0, charIndex + 1)}</span>`;
+    charIndex++;
+    if (charIndex === current.text.length) {
+      if (wordIndex === words.length - 1) {
+        settled = true;
+        return;
       }
-    });
-  }, { threshold: 0.3 });
-  sections.forEach(s => navObserver.observe(s));
+      setTimeout(type, 1200);
+      deleting = true;
+      charIndex = current.text.length;
+      return;
+    }
+    setTimeout(type, 55);
+  } else {
+    eyebrow.innerHTML = prefix + `<span style="color:${current.color}">${current.text.substring(0, charIndex - 1)}</span>`;
+    charIndex--;
+    if (charIndex === 0) {
+      deleting = false;
+      wordIndex++;
+      setTimeout(type, 300);
+      return;
+    }
+    setTimeout(type, 35);
+  }
+}
+
+setTimeout(type, 400);
+
+const coloredWords = document.querySelectorAll('.w-mechanical, .w-electrical, .w-code');
+coloredWords.forEach(w => {
+  w.style.opacity = '0';
+  w.style.transform = 'translateY(12px)';
+  w.style.display = 'inline-block';
+  w.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+});
+
+setTimeout(() => {
+  coloredWords[0].style.opacity = '1';
+  coloredWords[0].style.transform = 'translateY(0)';
+}, 400);
+setTimeout(() => {
+  coloredWords[1].style.opacity = '1';
+  coloredWords[1].style.transform = 'translateY(0)';
+}, 1100);
+setTimeout(() => {
+  coloredWords[2].style.opacity = '1';
+  coloredWords[2].style.transform = 'translateY(0)';
+}, 1800);
 </script>
 
 </body>
