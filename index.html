@@ -170,14 +170,22 @@
       gap: 8px;
       margin-top: 28px;
     }
-    .skill-tag {
-      font-family: var(--mono);
-      font-size: 0.74rem;
-      padding: 5px 12px;
-      border: 1px solid var(--border);
-      border-radius: 100px;
-      color: var(--muted);
-    }
+.skill-tag {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--muted);
+  transition: all 0.2s;
+  cursor: default;
+}
+
+.skill-tag:hover {
+  background: var(--ink);
+  color: var(--bg);
+  border-color: var(--ink);
+}
 
     /* PROJECTS */
     .project-list { display: flex; flex-direction: column; }
