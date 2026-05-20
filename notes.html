@@ -148,6 +148,43 @@
     }
   </style>
 </head>
+
+<script>
+  let pAngle = Math.PI / 4;
+  let pVelocity = 0;
+  const pL = 130, pG = 0.008, pDamp = 0.999;
+  const pCx = 80, pPy = 20;
+  const pArcR = 22;
+
+  function animatePendulum() {
+    pVelocity += (-pG / pL) * Math.sin(pAngle);
+    pVelocity *= pDamp;
+    pAngle += pVelocity;
+
+    const x = pCx + pL * Math.sin(pAngle);
+    const y = pPy + pL * Math.cos(pAngle);
+
+    document.getElementById('pRod').setAttribute('x2', x);
+    document.getElementById('pRod').setAttribute('y2', y);
+    document.getElementById('pBob').setAttribute('cx', x);
+    document.getElementById('pBob').setAttribute('cy', y);
+    document.getElementById('pDot').setAttribute('cx', x);
+    document.getElementById('pDot').setAttribute('cy', y);
+
+    const arcX = pCx + pArcR * Math.sin(pAngle);
+    const arcY = pPy + pArcR * Math.cos(pAngle);
+    const largeArc = Math.abs(pAngle) > Math.PI ? 1 : 0;
+    const sweep = pAngle > 0 ? 1 : 0;
+    document.getElementById('pArc').setAttribute('d',
+      'M ' + pCx + ' ' + (pPy + pArcR) + ' A ' + pArcR + ' ' + pArcR + ' 0 ' + largeArc + ' ' + sweep + ' ' + arcX + ' ' + arcY
+    );
+
+    requestAnimationFrame(animatePendulum);
+  }
+
+  animatePendulum();
+</script>
+
 <body>
 
   <div class="container">
@@ -227,6 +264,19 @@
         </div>
       </a>
 
+</div>
+
+    <div style="position:fixed; bottom:32px; right:32px; pointer-events:none;">
+      <svg id="pendulum" width="120" height="160" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" style="opacity:0.7;">
+        <circle cx="80" cy="20" r="3" fill="#888580"/>
+        <line x1="20" y1="20" x2="140" y2="20" stroke="#888580" stroke-width="0.8"/>
+        <path id="pArc" d="" fill="none" stroke="#888580" stroke-width="1" stroke-dasharray="3,3"/>
+        <text x="88" y="38" font-size="10" fill="#888580" font-family="monospace">θ</text>
+        <line id="pRod" x1="80" y1="20" x2="80" y2="150" stroke="#2563eb" stroke-width="1.2"/>
+        <circle id="pBob" cx="80" cy="150" r="10" fill="none" stroke="#2563eb" stroke-width="1.5"/>
+        <circle id="pDot" cx="80" cy="150" r="2.5" fill="#2563eb"/>
+        <line x1="80" y1="20" x2="80" y2="185" stroke="#888580" stroke-width="0.6" stroke-dasharray="3,3"/>
+      </svg>
     </div>
 
     <footer>
