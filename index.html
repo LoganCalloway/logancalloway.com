@@ -205,17 +205,18 @@
 
     /* PROJECTS */
     .project-list { display: flex; flex-direction: column; }
-    .project-item {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: start;
-      gap: 16px;
-      padding: 28px 0;
-      border-bottom: 1px solid var(--border);
-      text-decoration: none;
-      color: inherit;
-      transition: opacity 0.2s, transform 0.2s;
-    }
+  .project-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+    gap: 16px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s, transform 0.2s;
+    will-change: transform;
+  }
     .project-item:first-child { border-top: 1px solid var(--border); }
     .project-item:hover {
       opacity: 0.75;
