@@ -352,12 +352,13 @@
 }
 
     /* RESPONSIVE */
-    @media (max-width: 560px) {
-      .edu-header, .exp-header { flex-direction: column; gap: 2px; }
-      .project-item { grid-template-columns: 1fr; }
-      footer .container { flex-direction: column; gap: 8px; }
-      .nav-links { display: none; }
-    }
+      @media (max-width: 768px) {
+        .edu-header, .exp-header { flex-direction: column; gap: 2px; }
+        .project-item { grid-template-columns: 1fr; }
+        footer .container { flex-direction: column; gap: 8px; }
+        .nav-links { display: none; }
+        #unitCircle { display: none; }
+      }
   </style>
 </head>
 <body>
