@@ -574,12 +574,13 @@
     // Typewriter eyebrow animation
     const eyebrow = document.getElementById('eyebrow');
     const prefix = 'Logan Calloway · ';
+    const suffix = ' Engineer';
     const disciplines = [
-      { text: 'Electrical Engineer', color: '#2563eb' },
-      { text: 'Mechanical Engineer', color: '#BA7517' },
-      { text: 'Embedded Systems Engineer', color: '#3B6D11' },
-      { text: 'Computer Engineer', color: '#7C3AED' },
-      { text: 'Mechatronics Engineer', color: '#111110' },
+      { text: 'Electrical', color: '#2563eb' },
+      { text: 'Mechanical', color: '#BA7517' },
+      { text: 'Embedded Systems', color: '#3B6D11' },
+      { text: 'Computer', color: '#7C3AED' },
+      { text: 'Mechatronics', color: '#111110' },
     ];
     let wordIndex = 0;
     let charIndex = 0;
@@ -590,7 +591,7 @@
       if (settled) return;
       const current = disciplines[wordIndex];
       if (!deleting) {
-        eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex + 1) + '</span>';
+        eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex + 1) + '</span>' + suffix;
         charIndex++;
         if (charIndex === current.text.length) {
           if (wordIndex === disciplines.length - 1) { settled = true; return; }
@@ -601,7 +602,7 @@
         }
         setTimeout(type, 55);
       } else {
-        eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex - 1) + '</span>';
+        eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex - 1) + '</span>' + suffix;
         charIndex--;
         if (charIndex === 0) {
           deleting = false;
