@@ -13,11 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-.w-mechanical { font-style: normal; color: #BA7517; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.w-electrical  { font-style: normal; color: #2563eb; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.w-code        { font-style: normal; color: #3B6D11; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.w-visible { opacity: 1 !important; transform: translateY(0) !important; }
-</style>
+
     :root {
       --bg: #f7f6f3;
       --ink: #111110;
@@ -67,37 +63,34 @@
       color: var(--ink);
       text-decoration: none;
     }
-.nav-links {
-  display: flex;
-  gap: 28px;
-  list-style: none;
-}
-
-.nav-links a {
-  font-family: var(--mono);
-  font-size: 0.78rem;
-  color: var(--muted);
-  text-decoration: none;
-  letter-spacing: 0.04em;
-  transition: color 0.2s;
-  position: relative;
-}
-
-.nav-links a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background: var(--ink);
-  transition: width 0.2s ease;
-}
-
-.nav-links a:hover { color: var(--ink); }
-.nav-links a:hover::after { width: 100%; }
-.nav-links a.active { color: var(--ink); }
-.nav-links a.active::after { width: 100%; }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--ink);
+      transition: width 0.2s ease;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-links a.active { color: var(--ink); }
+    .nav-links a.active::after { width: 100%; }
 
     /* SECTIONS */
     section { padding: 96px 0 0; }
@@ -127,8 +120,7 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       margin-bottom: 20px;
-      opacity: 0;
-      animation: fadeUp 0.6s ease forwards 0.1s;
+      min-height: 1.2em;
     }
     h1 {
       font-family: var(--sans);
@@ -140,7 +132,11 @@
       opacity: 0;
       animation: fadeUp 0.6s ease forwards 0.2s;
     }
-    h1 em { font-style: normal; color: var(--accent); }
+    .w-mechanical { font-style: normal; color: #BA7517; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .w-electrical  { font-style: normal; color: #2563eb; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .w-code        { font-style: normal; color: #3B6D11; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .w-visible { opacity: 1 !important; transform: translateY(0) !important; }
+
     .hero-body {
       font-size: 1.05rem;
       color: var(--muted);
@@ -191,22 +187,21 @@
       gap: 8px;
       margin-top: 28px;
     }
-.skill-tag {
-  font-family: var(--mono);
-  font-size: 0.74rem;
-  padding: 5px 12px;
-  border: 1px solid var(--border);
-  border-radius: 100px;
-  color: var(--muted);
-  transition: all 0.2s;
-  cursor: default;
-}
-
-.skill-tag:hover {
-  background: var(--ink);
-  color: var(--bg);
-  border-color: var(--ink);
-}
+    .skill-tag {
+      font-family: var(--mono);
+      font-size: 0.74rem;
+      padding: 5px 12px;
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      color: var(--muted);
+      transition: all 0.2s;
+      cursor: default;
+    }
+    .skill-tag:hover {
+      background: var(--ink);
+      color: var(--bg);
+      border-color: var(--ink);
+    }
 
     /* PROJECTS */
     .project-list { display: flex; flex-direction: column; }
@@ -368,8 +363,8 @@
   <!-- HERO -->
   <section id="hero">
     <div class="container">
-<p class="hero-eyebrow" id="eyebrow"></p>
-<h1>Where <em class="w-mechanical">mechanical</em> meets<br><em class="w-electrical">electrical</em> meets <em class="w-code">code</em>.</h1>
+      <p class="hero-eyebrow" id="eyebrow"></p>
+      <h1>Where <em class="w-mechanical">mechanical</em> meets<br><em class="w-electrical">electrical</em> meets <em class="w-code">code</em>.</h1>
       <p class="hero-body">Mechatronics engineering student combining mechanical, electrical, and computer engineering to build things that work in the real world.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#projects">View projects</a>
@@ -381,12 +376,12 @@
 
   <!-- ABOUT -->
   <section id="about">
-    <div class="container"> 
+    <div class="container">
       <div class="divider"></div>
       <div style="margin-top:64px;">
         <p class="section-label reveal">About</p>
-        <p class="about-text reveal">I'm a Mechatronics Engineering student in a joint program between UNC Asheville and NC State University, with a focus on controls, embedded systems, and design. I care about building things that are both technically sound and actually useful.</p>
-        <p class="about-text reveal">Outside of coursework I've worked as a Resident Assistant, managed classrooms, and handled real world electrical and mechanical repairs — experience that's made me a stronger engineer and communicator.</p>
+        <p class="about-text reveal">I am a Mechatronics Engineering student in a joint program between UNC Asheville and NC State University, with a focus on controls, embedded systems, and design. I care about building things that are both technically sound and actually useful.</p>
+        <p class="about-text reveal">Outside of coursework I have worked as a Resident Assistant, managed classrooms, and handled real world electrical and mechanical repairs. That experience has made me a stronger engineer and communicator.</p>
         <div class="skills-grid reveal">
           <span class="skill-tag">SolidWorks</span>
           <span class="skill-tag">C / C++</span>
@@ -423,10 +418,10 @@
             <span class="project-arrow">↗</span>
           </a>
 
-            <a class="project-item reveal" href="magicsmoke.pdf" target="_blank" rel="noopener">
+          <a class="project-item reveal" href="magicsmoke.pdf" target="_blank" rel="noopener">
             <div>
               <p class="project-name">Magic Smoke — WiFi Controlled RC Vehicle</p>
-              <p class="project-desc">A team project where we built an RC car from the ground up that you could drive over WiFi or drop into a course and let it find its own way. Getting all the pieces to talk to each other was the whole challenge. ECE 306 —  Jim Carlson</p>
+              <p class="project-desc">A team project where we built an RC car from the ground up that you could drive over WiFi or drop into a course and let it find its own way. Getting all the pieces to talk to each other was the whole challenge. ECE 306 — Jim Carlson.</p>
               <div class="project-tags">
                 <span class="project-tag">C</span>
                 <span class="project-tag">MSP430</span>
@@ -438,34 +433,34 @@
           </a>
 
           <a class="project-item reveal" href="https://github.com/LoganCalloway/JEM-455-ros-robotics" target="_blank" rel="noopener">
-  <div>
-    <p class="project-name">Robotic Handoff System</p>
-    <p class="project-desc">Programmed a mobile robot and robot arm to work together autonomously to simulate a radioactive materials handling process. The arm used inverse kinematics to pick blocks from precise cementation deposit locations and load them onto the mobile robot, which navigated a course and returned them to a safe handling cell. Built in ROS with the two systems communicating in real time. JEM 455 — Dr. Eli Buckner.</p>
-    <div class="project-tags">
-      <span class="project-tag">ROS</span>
-      <span class="project-tag">C++</span>
-      <span class="project-tag">Inverse Kinematics</span>
-      <span class="project-tag">Mobile Robotics</span>
-      <span class="project-tag">Robot Arm</span>
-    </div>
-  </div>
-  <span class="project-arrow">↗</span>
-</a>
+            <div>
+              <p class="project-name">Robotic Handoff System</p>
+              <p class="project-desc">Programmed a mobile robot and robot arm to work together autonomously to simulate a radioactive materials handling process. The arm used inverse kinematics to pick blocks from precise cementation deposit locations and load them onto the mobile robot, which navigated a course and returned them to a safe handling cell. Built in ROS with the two systems communicating in real time. JEM 455 — Dr. Eli Buckner.</p>
+              <div class="project-tags">
+                <span class="project-tag">ROS</span>
+                <span class="project-tag">C++</span>
+                <span class="project-tag">Inverse Kinematics</span>
+                <span class="project-tag">Mobile Robotics</span>
+                <span class="project-tag">Robot Arm</span>
+              </div>
+            </div>
+            <span class="project-arrow">↗</span>
+          </a>
 
-<a class="project-item reveal" href="Quanser_Aero.pdf" target="_blank" rel="noopener">
-  <div>
-    <p class="project-name">Quanser Aero Dynamic Systems Modeling</p>
-    <p class="project-desc">Derived and validated mathematical models for a dual propeller mechatronic system capable of controlled pitch and yaw motion. Applied KVL and Newton's rotational laws to build differential equations for the thruster, pitch, and yaw dynamics, then used system identification techniques to identify unknown parameters. All models were validated against real hardware data in MATLAB and Simulink. JEM 420 — Team Project.</p>
-    <div class="project-tags">
-      <span class="project-tag">MATLAB</span>
-      <span class="project-tag">Simulink</span>
-      <span class="project-tag">Controls</span>
-      <span class="project-tag">System Identification</span>
-      <span class="project-tag">Team Project</span>
-    </div>
-  </div>
-  <span class="project-arrow">↗</span>
-</a>
+          <a class="project-item reveal" href="Quanser_Aero.pdf" target="_blank" rel="noopener">
+            <div>
+              <p class="project-name">Quanser Aero Dynamic Systems Modeling</p>
+              <p class="project-desc">Derived and validated mathematical models for a dual propeller mechatronic system capable of controlled pitch and yaw motion. Applied KVL and Newton's rotational laws to build differential equations for the thruster, pitch, and yaw dynamics, then used system identification techniques to identify unknown parameters. All models were validated against real hardware data in MATLAB and Simulink. JEM 420 — Team Project.</p>
+              <div class="project-tags">
+                <span class="project-tag">MATLAB</span>
+                <span class="project-tag">Simulink</span>
+                <span class="project-tag">Controls</span>
+                <span class="project-tag">System Identification</span>
+                <span class="project-tag">Team Project</span>
+              </div>
+            </div>
+            <span class="project-arrow">↗</span>
+          </a>
 
         </div>
       </div>
@@ -576,76 +571,80 @@
   </footer>
 
   <script>
-  const eyebrow = document.getElementById('eyebrow');
-  const prefix = 'Logan Calloway · ';
-  const disciplines = [
-    { text: 'Electrical Engineer', color: '#2563eb' },
-    { text: 'Mechanical Engineer', color: '#BA7517' },
-    { text: 'Embedded Systems Engineer', color: '#3B6D11' },
-    { text: 'Computer Engineer', color: '#7C3AED' },
-    { text: 'Mechatronics Engineer', color: '#111110' },
-  ];
-  let wordIndex = 0;
-  let charIndex = 0;
-  let deleting = false;
-  let settled = false;
+    // Typewriter eyebrow animation
+    const eyebrow = document.getElementById('eyebrow');
+    const prefix = 'Logan Calloway · ';
+    const disciplines = [
+      { text: 'Electrical Engineer', color: '#2563eb' },
+      { text: 'Mechanical Engineer', color: '#BA7517' },
+      { text: 'Embedded Systems Engineer', color: '#3B6D11' },
+      { text: 'Computer Engineer', color: '#7C3AED' },
+      { text: 'Mechatronics Engineer', color: '#111110' },
+    ];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    let settled = false;
 
-  function type() {
-    if (settled) return;
-    const current = disciplines[wordIndex];
-    if (!deleting) {
-      eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex + 1) + '</span>';
-      charIndex++;
-      if (charIndex === current.text.length) {
-        if (wordIndex === disciplines.length - 1) { settled = true; return; }
-        deleting = true;
-        charIndex = current.text.length;
-        setTimeout(type, 1200);
-        return;
+    function type() {
+      if (settled) return;
+      const current = disciplines[wordIndex];
+      if (!deleting) {
+        eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex + 1) + '</span>';
+        charIndex++;
+        if (charIndex === current.text.length) {
+          if (wordIndex === disciplines.length - 1) { settled = true; return; }
+          deleting = true;
+          charIndex = current.text.length;
+          setTimeout(type, 1200);
+          return;
+        }
+        setTimeout(type, 55);
+      } else {
+        eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex - 1) + '</span>';
+        charIndex--;
+        if (charIndex === 0) {
+          deleting = false;
+          wordIndex++;
+          setTimeout(type, 300);
+          return;
+        }
+        setTimeout(type, 35);
       }
-      setTimeout(type, 55);
-    } else {
-      eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex - 1) + '</span>';
-      charIndex--;
-      if (charIndex === 0) {
-        deleting = false;
-        wordIndex++;
-        setTimeout(type, 300);
-        return;
-      }
-      setTimeout(type, 35);
     }
-  }
-  setTimeout(type, 400);
+    setTimeout(type, 400);
 
-  setTimeout(() => document.querySelector('.w-mechanical').classList.add('w-visible'), 400);
-  setTimeout(() => document.querySelector('.w-electrical').classList.add('w-visible'), 1100);
-  setTimeout(() => document.querySelector('.w-code').classList.add('w-visible'), 1800);
+    // Colored word animations in headline
+    setTimeout(() => document.querySelector('.w-mechanical').classList.add('w-visible'), 400);
+    setTimeout(() => document.querySelector('.w-electrical').classList.add('w-visible'), 1100);
+    setTimeout(() => document.querySelector('.w-code').classList.add('w-visible'), 1800);
 
-  const reveals = document.querySelectorAll('.reveal');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 60);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => revealObserver.observe(el));
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 60);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => revealObserver.observe(el));
 
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  const navObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => link.classList.remove('active'));
-        const active = document.querySelector('.nav-links a[href="#' + entry.target.id + '"]');
-        if (active) active.classList.add('active');
-      }
-    });
-  }, { threshold: 0.3 });
-  sections.forEach(s => navObserver.observe(s));
-</script>
+    // Active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const active = document.querySelector('.nav-links a[href="#' + entry.target.id + '"]');
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(s => navObserver.observe(s));
+  </script>
 
 </body>
 </html>
