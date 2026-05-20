@@ -13,7 +13,11 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+.w-mechanical { font-style: normal; color: #BA7517; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.w-electrical  { font-style: normal; color: #2563eb; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.w-code        { font-style: normal; color: #3B6D11; opacity: 0; display: inline-block; transform: translateY(12px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.w-visible { opacity: 1 !important; transform: translateY(0) !important; }
+</style>
     :root {
       --bg: #f7f6f3;
       --ink: #111110;
@@ -364,8 +368,8 @@
   <!-- HERO -->
   <section id="hero">
     <div class="container">
-      <p class="hero-eyebrow">Logan Calloway · Mechatronics Engineer</p>
-      <h1>Where mechanical meets<br>electrical meets <em>code</em>.</h1>
+<p class="hero-eyebrow" id="eyebrow"></p>
+<h1>Where <em class="w-mechanical">mechanical</em> meets<br><em class="w-electrical">electrical</em> meets <em class="w-code">code</em>.</h1>
       <p class="hero-body">Mechatronics engineering student combining mechanical, electrical, and computer engineering to build things that work in the real world.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#projects">View projects</a>
@@ -572,76 +576,75 @@
   </footer>
 
   <script>
-const eyebrow = document.getElementById('eyebrow');
-const prefix = 'Logan Calloway · ';
-const words = [
-  { text: 'Electrical Engineer', color: '#2563eb' },
-  { text: 'Mechanical Engineer', color: '#BA7517' },
-  { text: 'Embedded Systems Engineer', color: '#3B6D11' },
-  { text: 'Computer Engineer', color: '#7C3AED' },
-  { text: 'Mechatronics Engineer', color: '#111110' },
-];
-let wordIndex = 0;
-let charIndex = 0;
-let deleting = false;
-let settled = false;
+  const eyebrow = document.getElementById('eyebrow');
+  const prefix = 'Logan Calloway · ';
+  const disciplines = [
+    { text: 'Electrical Engineer', color: '#2563eb' },
+    { text: 'Mechanical Engineer', color: '#BA7517' },
+    { text: 'Embedded Systems Engineer', color: '#3B6D11' },
+    { text: 'Computer Engineer', color: '#7C3AED' },
+    { text: 'Mechatronics Engineer', color: '#111110' },
+  ];
+  let wordIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+  let settled = false;
 
-function type() {
-  if (settled) return;
-
-  const current = words[wordIndex];
-  const fullText = prefix + current.text;
-  const prefixLength = prefix.length;
-
-  if (!deleting) {
-    eyebrow.innerHTML = prefix + `<span style="color:${current.color}">${current.text.substring(0, charIndex + 1)}</span>`;
-    charIndex++;
-    if (charIndex === current.text.length) {
-      if (wordIndex === words.length - 1) {
-        settled = true;
+  function type() {
+    if (settled) return;
+    const current = disciplines[wordIndex];
+    if (!deleting) {
+      eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex + 1) + '</span>';
+      charIndex++;
+      if (charIndex === current.text.length) {
+        if (wordIndex === disciplines.length - 1) { settled = true; return; }
+        deleting = true;
+        charIndex = current.text.length;
+        setTimeout(type, 1200);
         return;
       }
-      setTimeout(type, 1200);
-      deleting = true;
-      charIndex = current.text.length;
-      return;
+      setTimeout(type, 55);
+    } else {
+      eyebrow.innerHTML = prefix + '<span style="color:' + current.color + '">' + current.text.substring(0, charIndex - 1) + '</span>';
+      charIndex--;
+      if (charIndex === 0) {
+        deleting = false;
+        wordIndex++;
+        setTimeout(type, 300);
+        return;
+      }
+      setTimeout(type, 35);
     }
-    setTimeout(type, 55);
-  } else {
-    eyebrow.innerHTML = prefix + `<span style="color:${current.color}">${current.text.substring(0, charIndex - 1)}</span>`;
-    charIndex--;
-    if (charIndex === 0) {
-      deleting = false;
-      wordIndex++;
-      setTimeout(type, 300);
-      return;
-    }
-    setTimeout(type, 35);
   }
-}
+  setTimeout(type, 400);
 
-setTimeout(type, 400);
+  setTimeout(() => document.querySelector('.w-mechanical').classList.add('w-visible'), 400);
+  setTimeout(() => document.querySelector('.w-electrical').classList.add('w-visible'), 1100);
+  setTimeout(() => document.querySelector('.w-code').classList.add('w-visible'), 1800);
 
-const coloredWords = document.querySelectorAll('.w-mechanical, .w-electrical, .w-code');
-coloredWords.forEach(w => {
-  w.style.opacity = '0';
-  w.style.transform = 'translateY(12px)';
-  w.style.display = 'inline-block';
-  w.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-});
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => revealObserver.observe(el));
 
-setTimeout(() => {
-  coloredWords[0].style.opacity = '1';
-  coloredWords[0].style.transform = 'translateY(0)';
-}, 400);
-setTimeout(() => {
-  coloredWords[1].style.opacity = '1';
-  coloredWords[1].style.transform = 'translateY(0)';
-}, 1100);
-setTimeout(() => {
-  coloredWords[2].style.opacity = '1';
-  coloredWords[2].style.transform = 'translateY(0)';
-}, 1800);
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const navObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        const active = document.querySelector('.nav-links a[href="#' + entry.target.id + '"]');
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.3 });
+  sections.forEach(s => navObserver.observe(s));
 </script>
 
 </body>
