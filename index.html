@@ -376,19 +376,34 @@
     </div>
   </nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="container">
-      <p class="hero-eyebrow" id="eyebrow"></p>
-      <h1>Where <em class="w-mechanical">mechanical</em> meets<br><em class="w-electrical">electrical</em> meets <em class="w-code">code</em>.</h1>
-      <p class="hero-body">Mechatronics engineering student combining mechanical, electrical, and computer engineering to build things that work in the real world.</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="#projects">View projects</a>
-        <a class="btn btn-ghost" href="#contact">Get in touch</a>
-        <a class="btn btn-ghost" href="Calloway_resume.pdf" target="_blank">Resume ↗</a>
+<!-- HERO -->
+    <section id="hero" style="position:relative;">
+      <div class="container">
+        <p class="hero-eyebrow" id="eyebrow"></p>
+        <h1>Where <em class="w-mechanical">mechanical</em> meets<br><em class="w-electrical">electrical</em> meets <em class="w-code">code</em>.</h1>
+        <p class="hero-body">Mechatronics engineering student combining mechanical, electrical, and computer engineering to build things that work in the real world.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">View projects</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+          <a class="btn btn-ghost" href="Calloway_resume.pdf" target="_blank">Resume ↗</a>
+        </div>
       </div>
-    </div>
-  </section>
+      <div style="position:absolute; top:140px; right:28px; pointer-events:none;">
+        <svg id="unitCircle" width="160" height="160" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" style="opacity:0.4;">
+          <line x1="10" y1="110" x2="210" y2="110" stroke="#888580" stroke-width="0.8"/>
+          <line x1="110" y1="10" x2="110" y2="210" stroke="#888580" stroke-width="0.8"/>
+          <circle cx="110" cy="110" r="75" fill="none" stroke="#111110" stroke-width="1"/>
+          <path id="angleArc" d="" fill="none" stroke="#888580" stroke-width="1"/>
+          <text x="128" y="107" font-size="10" fill="#888580" font-family="monospace">θ</text>
+          <line id="cosLine" x1="110" y1="110" x2="185" y2="110" stroke="#3B6D11" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <line id="sinLine" x1="185" y1="110" x2="185" y2="110" stroke="#BA7517" stroke-width="1.2" stroke-dasharray="3,3"/>
+          <line id="radius" x1="110" y1="110" x2="185" y2="110" stroke="#2563eb" stroke-width="1.2"/>
+          <circle id="dot" cx="185" cy="110" r="4" fill="#2563eb"/>
+          <text x="192" y="84" font-size="9" fill="#BA7517" font-family="monospace">sin</text>
+          <text x="130" y="125" font-size="9" fill="#3B6D11" font-family="monospace">cos</text>
+        </svg>
+      </div>
+    </section>
 
   <!-- ABOUT -->
   <section id="about">
@@ -668,6 +683,31 @@ window.addEventListener('scroll', () => {
       });
     }, { threshold: 0.3 });
     sections.forEach(s => navObserver.observe(s));
+
+    let ucAngle = 0;
+    const ucCx = 110, ucCy = 110, ucR = 75, ucArcR = 18;
+    function animateCircle() {
+      ucAngle += 0.008;
+      const x = ucCx + ucR * Math.cos(ucAngle);
+      const y = ucCy - ucR * Math.sin(ucAngle);
+      document.getElementById('dot').setAttribute('cx', x);
+      document.getElementById('dot').setAttribute('cy', y);
+      document.getElementById('radius').setAttribute('x2', x);
+      document.getElementById('radius').setAttribute('y2', y);
+      document.getElementById('sinLine').setAttribute('x1', x);
+      document.getElementById('sinLine').setAttribute('x2', x);
+      document.getElementById('sinLine').setAttribute('y1', y);
+      document.getElementById('sinLine').setAttribute('y2', ucCy);
+      document.getElementById('cosLine').setAttribute('x2', x);
+      const arcX = ucCx + ucArcR * Math.cos(ucAngle);
+      const arcY = ucCy - ucArcR * Math.sin(ucAngle);
+      const largeArc = ucAngle % (2 * Math.PI) > Math.PI ? 1 : 0;
+      document.getElementById('angleArc').setAttribute('d',
+        'M ' + (ucCx + ucArcR) + ' ' + ucCy + ' A ' + ucArcR + ' ' + ucArcR + ' 0 ' + largeArc + ' 0 ' + arcX + ' ' + arcY
+      );
+      requestAnimationFrame(animateCircle);
+    }
+    animateCircle();
   </script>
 
 </body>
