@@ -151,6 +151,45 @@
     .nav-links a.active { color: var(--ink); }
     .nav-links a.active::after { width: 100%; }
 
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--ink);
+      padding: 4px;
+      align-items: center;
+    }
+    .nav-toggle svg { width: 20px; height: 20px; }
+    .nav-toggle .icon-close { display: none; }
+    .nav-toggle.open .icon-menu { display: none; }
+    .nav-toggle.open .icon-close { display: block; }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 56px;
+      left: 0; right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+    }
+    .mobile-menu.open { display: block; }
+    .mobile-menu ul { list-style: none; display: flex; flex-direction: column; }
+    .mobile-menu a {
+      display: block;
+      padding: 16px 28px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      border-top: 1px solid var(--border);
+      transition: color 0.2s;
+    }
+    .mobile-menu li:first-child a { border-top: none; }
+    .mobile-menu a:hover, .mobile-menu a.active { color: var(--ink); }
+
     /* SECTIONS */
     section { padding: 96px 0 0; }
     section:last-of-type { padding-bottom: 96px; }
@@ -416,6 +455,7 @@
         .project-item { grid-template-columns: 1fr; }
         footer .container { flex-direction: column; gap: 8px; }
         .nav-links { display: none; }
+        .nav-toggle { display: flex; }
         #unitCircle { display: none; }
       }
   </style>
@@ -443,7 +483,27 @@
             <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
           </svg>
         </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+          <svg class="icon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+          <svg class="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+            <line x1="6" y1="18" x2="18" y2="6"></line>
+          </svg>
+        </button>
       </div>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <ul>
+        <li><a href="#about">about</a></li>
+        <li><a href="#projects">projects</a></li>
+        <li><a href="#education">education</a></li>
+        <li><a href="#experience">experience</a></li>
+        <li><a href="#contact">contact</a></li>
+      </ul>
     </div>
   </nav>
 
@@ -687,6 +747,29 @@
       localStorage.setItem('theme', next);
     });
 
+    // Mobile nav toggle
+    const navToggle = document.getElementById('navToggle');
+    const mobileMenu = document.getElementById('mobileMenu');
+    navToggle.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      navToggle.classList.toggle('open', isOpen);
+      navToggle.setAttribute('aria-expanded', isOpen);
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        mobileMenu.classList.remove('open');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        setTimeout(() => {
+          const target = document.querySelector(targetId);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', targetId);
+        }, 50);
+      });
+    });
+
     const progress = document.getElementById('progress');
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
@@ -756,13 +839,14 @@ window.addEventListener('scroll', () => {
 
     // Active nav highlight
     const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
+    const navLinks = document.querySelectorAll('.nav-links a, .mobile-menu a');
     const navObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           navLinks.forEach(link => link.classList.remove('active'));
-          const active = document.querySelector('.nav-links a[href="#' + entry.target.id + '"]');
-          if (active) active.classList.add('active');
+          document.querySelectorAll('a[href="#' + entry.target.id + '"]').forEach(link => {
+            if (link.closest('.nav-links, .mobile-menu')) link.classList.add('active');
+          });
         }
       });
     }, { threshold: 0.3 });
