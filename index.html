@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -30,19 +37,40 @@
       --muted: #888580;
       --accent: #2563eb;
       --border: #e2e0da;
+      --text2: #444440;
+      --text3: #555552;
+      --nav-bg: rgba(247,246,243,0.9);
       --mono: 'DM Mono', monospace;
       --sans: 'DM Sans', sans-serif;
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #131211;
+      --ink: #f0eee8;
+      --muted: #9c988f;
+      --accent: #529bff;
+      --border: #2b2a26;
+      --text2: #cfccc5;
+      --text3: #b8b5ad;
+      --nav-bg: rgba(19,18,17,0.85);
     }
 
     html { font-size: 16px; scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f7f6f3' surfaceScale='2'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.18'/%3E%3C/svg%3E");
+      background-repeat: repeat;
       color: var(--ink);
       font-family: var(--sans);
       font-weight: 300;
       line-height: 1.6;
       min-height: 100vh;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    :root[data-theme="dark"] body {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='paperDark'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23131211' surfaceScale='2'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperDark)' opacity='0.12'/%3E%3C/svg%3E");
     }
 
     .container {
@@ -56,7 +84,7 @@
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      background: rgba(247,246,243,0.9);
+      background: var(--nav-bg);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
@@ -66,6 +94,27 @@
       justify-content: space-between;
       height: 56px;
     }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .theme-toggle:hover { color: var(--ink); }
+    .theme-toggle svg { width: 16px; height: 16px; }
+    .icon-sun { display: none; }
+    .icon-moon { display: block; }
+    :root[data-theme="dark"] .icon-sun { display: block; }
+    :root[data-theme="dark"] .icon-moon { display: none; }
     .nav-logo {
       font-family: var(--mono);
       font-size: 0.85rem;
@@ -185,7 +234,7 @@
     /* ABOUT */
     .about-text {
       font-size: 1rem;
-      color: #444440;
+      color: var(--text2);
       line-height: 1.78;
       max-width: 560px;
     }
@@ -296,7 +345,7 @@
       color: var(--accent);
       margin-bottom: 6px;
     }
-    .exp-desc { font-size: 0.88rem; color: #555552; line-height: 1.65; }
+    .exp-desc { font-size: 0.88rem; color: var(--text3); line-height: 1.65; }
 
     /* CONTACT */
     .contact-intro {
@@ -377,13 +426,24 @@
   <nav>
     <div class="container">
       <a class="nav-logo" href="#hero">lc</a>
-      <ul class="nav-links">
-        <li><a href="#about">about</a></li>
-        <li><a href="#projects">projects</a></li>
-        <li><a href="#education">education</a></li>
-        <li><a href="#experience">experience</a></li>
-        <li><a href="#contact">contact</a></li>
-      </ul>
+      <div class="nav-right">
+        <ul class="nav-links">
+          <li><a href="#about">about</a></li>
+          <li><a href="#projects">projects</a></li>
+          <li><a href="#education">education</a></li>
+          <li><a href="#experience">experience</a></li>
+          <li><a href="#contact">contact</a></li>
+        </ul>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
 
@@ -401,11 +461,11 @@
       </div>
       <div style="position:absolute; top:140px; right:28px; pointer-events:none;">
         <svg id="unitCircle" width="160" height="160" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" style="opacity:0.7;">
-          <line x1="10" y1="110" x2="210" y2="110" stroke="#888580" stroke-width="0.8"/>
-          <line x1="110" y1="10" x2="110" y2="210" stroke="#888580" stroke-width="0.8"/>
-          <circle cx="110" cy="110" r="75" fill="none" stroke="#111110" stroke-width="1"/>
-          <path id="angleArc" d="" fill="none" stroke="#888580" stroke-width="1"/>
-          <text x="128" y="107" font-size="10" fill="#888580" font-family="monospace">θ</text>
+          <line x1="10" y1="110" x2="210" y2="110" style="stroke:var(--muted)" stroke-width="0.8"/>
+          <line x1="110" y1="10" x2="110" y2="210" style="stroke:var(--muted)" stroke-width="0.8"/>
+          <circle cx="110" cy="110" r="75" fill="none" style="stroke:var(--ink)" stroke-width="1"/>
+          <path id="angleArc" d="" fill="none" style="stroke:var(--muted)" stroke-width="1"/>
+          <text x="128" y="107" font-size="10" style="fill:var(--muted)" font-family="monospace">θ</text>
           <line id="cosLine" x1="110" y1="110" x2="185" y2="110" stroke="#3B6D11" stroke-width="1.2" stroke-dasharray="3,3"/>
           <line id="sinLine" x1="185" y1="110" x2="185" y2="110" stroke="#BA7517" stroke-width="1.2" stroke-dasharray="3,3"/>
           <line id="radius" x1="110" y1="110" x2="185" y2="110" stroke="#2563eb" stroke-width="1.2"/>
@@ -619,6 +679,14 @@
 
   <script>
 
+    // Dark mode toggle
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
     const progress = document.getElementById('progress');
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY;
@@ -634,7 +702,7 @@ window.addEventListener('scroll', () => {
       { text: 'Mechanical', color: '#BA7517' },
       { text: 'Embedded Systems', color: '#3B6D11' },
       { text: 'Computer', color: '#7C3AED' },
-      { text: 'Mechatronics', color: '#111110' },
+      { text: 'Mechatronics', color: 'var(--ink)' },
     ];
     let wordIndex = 0;
     let charIndex = 0;
