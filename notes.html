@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    (function() {
+      var saved = localStorage.getItem('theme');
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <meta name="robots" content="noindex, nofollow">
@@ -23,17 +30,56 @@
       --sans: 'DM Sans', sans-serif;
     }
 
+    :root[data-theme="dark"] {
+      --bg: #131211;
+      --ink: #f0eee8;
+      --muted: #9c988f;
+      --accent: #529bff;
+      --border: #2b2a26;
+    }
+
     html { font-size: 16px; scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background-color: var(--bg);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='paper'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23f7f6f3' surfaceScale='2'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paper)' opacity='0.18'/%3E%3C/svg%3E");
+      background-repeat: repeat;
       color: var(--ink);
       font-family: var(--sans);
       font-weight: 300;
       line-height: 1.6;
       min-height: 100vh;
       padding: 80px 28px;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
+
+    :root[data-theme="dark"] body {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='paperDark'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='5' result='noise'/%3E%3CfeDiffuseLighting in='noise' lighting-color='%23131211' surfaceScale='2'%3E%3CfeDistantLight azimuth='60' elevation='50'/%3E%3C/feDiffuseLighting%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23paperDark)' opacity='0.12'/%3E%3C/svg%3E");
+    }
+
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--muted);
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .theme-toggle:hover { color: var(--ink); }
+    .theme-toggle svg { width: 16px; height: 16px; }
+    .icon-sun { display: none; }
+    .icon-moon { display: block; }
+    :root[data-theme="dark"] .icon-sun { display: block; }
+    :root[data-theme="dark"] .icon-moon { display: none; }
 
     .container {
       max-width: 900px;
@@ -160,7 +206,18 @@
 
   <div class="container">
 
-    <a href="https://logancalloway.com" style="font-family: 'DM Mono', monospace; font-size: 0.85rem; font-weight: 500; color: #111110; text-decoration: none; display: inline-block; margin-bottom: 32px;">lc</a>
+    <div class="page-header">
+      <a href="https://logancalloway.com" style="font-family: 'DM Mono', monospace; font-size: 0.85rem; font-weight: 500; color: var(--ink); text-decoration: none;">lc</a>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+        </svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </button>
+    </div>
     <p class="page-eyebrow">Notes</p>
     <h1>Course Notes</h1>
     <p class="page-intro">Crib sheets and notes from my courses. Shared with students I trust — please keep it that way.</p>
@@ -245,18 +302,25 @@
 
   <div class="pendulum-wrap">
     <svg id="pendulum" width="120" height="160" viewBox="0 0 160 200" xmlns="http://www.w3.org/2000/svg" style="opacity:0.7;">
-      <circle cx="80" cy="20" r="3" fill="#888580"/>
-      <line x1="20" y1="20" x2="140" y2="20" stroke="#888580" stroke-width="0.8"/>
-      <path id="pArc" d="" fill="none" stroke="#888580" stroke-width="1" stroke-dasharray="3,3"/>
-      <text x="88" y="38" font-size="10" fill="#888580" font-family="monospace">θ</text>
+      <circle cx="80" cy="20" r="3" style="fill:var(--muted)"/>
+      <line x1="20" y1="20" x2="140" y2="20" style="stroke:var(--muted)" stroke-width="0.8"/>
+      <path id="pArc" d="" fill="none" style="stroke:var(--muted)" stroke-width="1" stroke-dasharray="3,3"/>
+      <text x="88" y="38" font-size="10" style="fill:var(--muted)" font-family="monospace">θ</text>
       <line id="pRod" x1="80" y1="20" x2="80" y2="150" stroke="#2563eb" stroke-width="1.2"/>
       <circle id="pBob" cx="80" cy="150" r="10" fill="none" stroke="#2563eb" stroke-width="1.5"/>
       <circle id="pDot" cx="80" cy="150" r="2.5" fill="#2563eb"/>
-      <line x1="80" y1="20" x2="80" y2="185" stroke="#888580" stroke-width="0.6" stroke-dasharray="3,3"/>
+      <line x1="80" y1="20" x2="80" y2="185" style="stroke:var(--muted)" stroke-width="0.6" stroke-dasharray="3,3"/>
     </svg>
   </div>
 
   <script>
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+
     let pAngle = Math.PI / 4;
     let pVelocity = 0;
     const pL = 130, pG = 0.008, pDamp = 0.999;
